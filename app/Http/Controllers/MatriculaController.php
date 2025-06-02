@@ -66,10 +66,10 @@ class MatriculaController extends Controller
     }
 
     public function show(Matricula $matricula)
-    {
-        $matricula->load(['estudiante.apoderado', 'detallesMatricula.curso', 'detallesMatricula.horario', 'pagos']);
-        return view('admin.matriculas.show', compact('matricula'));
-    }
+{
+    $matricula->load(['estudiante.apoderado', 'estudiante.gradoEscolar.nivelEducativo', 'pagos']);
+    return view('admin.matriculas.show', compact('matricula'));
+}
 
     public function edit(Matricula $matricula)
     {

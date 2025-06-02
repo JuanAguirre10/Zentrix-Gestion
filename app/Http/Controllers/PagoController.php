@@ -39,10 +39,10 @@ class PagoController extends Controller
     }
 
     public function show(Pago $pago)
-    {
-        $pago->load(['matricula.estudiante.apoderado', 'matricula.detallesMatricula.curso', 'metodoPago']);
-        return view('admin.pagos.show', compact('pago'));
-    }
+{
+    $pago->load(['matricula.estudiante.apoderado', 'matricula.estudiante.gradoEscolar', 'matricula.pagos']);
+    return view('admin.pagos.show', compact('pago'));
+}
 
     public function edit(Pago $pago)
     {

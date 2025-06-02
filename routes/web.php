@@ -25,24 +25,24 @@ Route::get('/dashboard', function () {
     $total_cursos = Curso::count();
     $total_matriculas = Matricula::count();
     $total_pagos = Pago::where('estado', 'completado')->sum('monto');
-    
+
     // Estudiantes recientes
     $estudiantes_recientes = Estudiante::with('gradoEscolar')
         ->orderBy('created_at', 'desc')
         ->take(5)
         ->get();
-    
+
     // Pagos recientes
     $pagos_recientes = Pago::with('matricula.estudiante')
         ->where('estado', 'completado')
         ->orderBy('fecha_pago', 'desc')
         ->take(5)
         ->get();
-    
+
     // Niveles educativos con conteo de estudiantes
     $niveles = NivelEducativo::withCount(['estudiantes as estudiantes_count'])
         ->get();
-    
+
     return view('admin.dashboard', compact(
         'total_estudiantes',
         'total_cursos',

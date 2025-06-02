@@ -19,12 +19,6 @@
             </div>
         @endif
 
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
@@ -34,20 +28,18 @@
                         <th>Apellidos</th>
                         <th>DNI</th>
                         <th>Grado</th>
-                        <th>Nivel</th>
                         <th>Apoderado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($estudiantes as $estudiante)
+                    @foreach($estudiantes as $estudiante)
                     <tr>
                         <td>{{ $estudiante->id_estudiante }}</td>
                         <td>{{ $estudiante->nombres }}</td>
                         <td>{{ $estudiante->apellidos }}</td>
                         <td>{{ $estudiante->dni ?? 'N/A' }}</td>
                         <td>{{ $estudiante->gradoEscolar->nombre ?? 'N/A' }}</td>
-                        <td>{{ $estudiante->gradoEscolar->nivelEducativo->nombre ?? 'N/A' }}</td>
                         <td>{{ $estudiante->apoderado->nombres ?? 'N/A' }} {{ $estudiante->apoderado->apellidos ?? '' }}</td>
                         <td>
                             <div class="btn-group" role="group">
@@ -67,11 +59,7 @@
                             </div>
                         </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="8" class="text-center">No hay estudiantes registrados.</td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>

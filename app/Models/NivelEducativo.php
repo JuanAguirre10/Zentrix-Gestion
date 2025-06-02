@@ -9,7 +9,7 @@ class NivelEducativo extends Model
 {
     use HasFactory;
     
-    protected $table = 'niveles_edu';
+    protected $table = 'niveles_educativos';
     protected $primaryKey = 'id_nivel';
     protected $fillable = ['nombre', 'descripcion'];
     

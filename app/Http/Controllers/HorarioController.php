@@ -65,4 +65,9 @@ class HorarioController extends Controller
         return redirect()->route('horarios.index')
             ->with('success', 'Horario eliminado exitosamente');
     }
+    public function show(Horario $horario)
+{
+    $horario->load(['cursos.nivelEducativo']);
+    return view('admin.horarios.show', compact('horario'));
+}
 }
