@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.zentrix')
 
 @section('title', 'Centro de Control')
 
@@ -12,7 +12,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <div class="stat-label">Estudiantes</div>
-                        <div class="stat-value">{{ $total_estudiantes ?? 0 }}</div>
+                        <div class="stat-value">{{ $totalEstudiantes ?? 0 }}</div>
                     </div>
                     <div class="stat-icon">
                         <i class="fas fa-user-graduate"></i>
@@ -34,7 +34,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <div class="stat-label">Cursos</div>
-                        <div class="stat-value">{{ $total_cursos ?? 0 }}</div>
+                        <div class="stat-value">{{ $totalCursos ?? 0 }}</div>
                     </div>
                     <div class="stat-icon">
                         <i class="fas fa-book"></i>
@@ -56,7 +56,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <div class="stat-label">Matrículas</div>
-                        <div class="stat-value">{{ $total_matriculas ?? 0 }}</div>
+                        <div class="stat-value">{{ $matriculasActivas ?? 0 }}</div>
                     </div>
                     <div class="stat-icon">
                         <i class="fas fa-clipboard-list"></i>
@@ -77,16 +77,16 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="stat-label">Pagos</div>
-                        <div class="stat-value">S/ {{ number_format($total_pagos ?? 0, 2) }}</div>
+                        <div class="stat-label">Apoderados</div>
+                        <div class="stat-value">{{ $totalApoderados ?? 0 }}</div>
                     </div>
                     <div class="stat-icon">
-                        <i class="fas fa-money-bill-wave"></i>
+                        <i class="fas fa-users"></i>
                     </div>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="{{ route('pagos.index') }}">
+                <a href="{{ route('apoderados.index') }}">
                     <span>Ver detalles</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
@@ -166,7 +166,7 @@
                                     <td>S/ {{ number_format($pago->monto, 2) }}</td>
                                     <td>{{ \Carbon\Carbon::parse($pago->fecha_pago)->format('d/m/Y') }}</td>
                                     <td>
-                                        <a href="{{ route('pagos.show', $pago->id_pago) }}" class="btn btn-sm btn-primary">
+                                        <a href="{{ route('pagos.show', $pago->id_pago ?? $pago->id) }}" class="btn btn-sm btn-primary">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </td>

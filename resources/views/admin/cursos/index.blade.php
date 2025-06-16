@@ -53,7 +53,8 @@
                                 <a href="{{ route('cursos.edit', $curso->id_curso) }}" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="{{ route('cursos.temas', $curso->id_curso) }}" class="btn btn-success btn-sm">
+                                {{-- <a href="{{ route('cursos.temas', $curso->id_curso) }}" class="btn btn-success btn-sm"> --}}
+<a href="#" class="btn btn-success btn-sm disabled" title="Función en desarrollo">
                                     <i class="fas fa-list"></i>
                                 </a>
                                 <form action="{{ route('cursos.destroy', $curso->id_curso) }}" method="POST" style="display: inline-block;">

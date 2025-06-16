@@ -7,9 +7,21 @@ use App\Models\Apoderado;
 use App\Models\GradoEscolar;
 use App\Models\NivelEducativo;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class EstudianteController extends Controller
 {
+    // ✅ CONSTRUCTOR AL INICIO DE LA CLASE
+    public function __construct()
+    {
+        // Aplicar middleware a todas las funciones
+        $this->middleware(['auth', 'active']);
+        $this->middleware('admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware('role:admin,teacher')->only(['index', 'show']);
+       
+        
+    }
+
     public function index()
     {
         $estudiantes = Estudiante::with(['apoderado', 'gradoEscolar.nivelEducativo'])->get();

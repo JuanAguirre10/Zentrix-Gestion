@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'active',
     ];
 
     /**
@@ -43,6 +45,43 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'active' => 'boolean',
         ];
+    }
+
+    // Verificar si es administrador
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    // Verificar si es profesor
+    public function isTeacher()
+    {
+        return $this->role === 'teacher';
+    }
+
+    // Verificar si es estudiante
+    public function isStudent()
+    {
+        return $this->role === 'student';
+    }
+
+    // Verificar si tiene un rol específico
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
+
+    // Verificar si tiene cualquiera de los roles especificados
+    public function hasAnyRole(array $roles)
+    {
+        return in_array($this->role, $roles);
+    }
+
+    // Verificar si está activo
+    public function isActive()
+    {
+        return $this->active;
     }
 }
