@@ -13,7 +13,7 @@ class MatriculaController extends Controller
 {
     public function index()
     {
-        $matriculas = Matricula::with(['estudiante', 'detallesMatricula.curso'])->get();
+        $matriculas = Matricula::with(['estudiante', 'detallesMatricula'])->get();
         return view('admin.matriculas.index', compact('matriculas'));
     }
 
@@ -26,44 +26,46 @@ class MatriculaController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'id_estudiante' => 'required|exists:estudiantes,id_estudiante',
-            'fecha_registro' => 'required|date',
-            'descuento' => 'nullable|numeric|min:0|max:100',
-            'costo_total' => 'required|numeric|min:0',
-            'cursos' => 'required|array|min:1',
-            'cursos.*' => 'exists:cursos,id_curso',
-            'horarios' => 'required|array|min:1',
-            'horarios.*' => 'exists:horarios,id_horario',
-            'montos' => 'required|array|min:1',
-            'montos.*' => 'numeric|min:0',
-            'notas' => 'nullable|string'
-        ]);
+{
+    $request->validate([
+        'id_estudiante' => 'required|exists:estudiantes,id_estudiante',
+        'fecha_registro' => 'required|date',
+        'descuento' => 'nullable|numeric|min:0|max:100',
+        'costo_total' => 'required|numeric|min:0',
+        'cursos' => 'required|array|min:1',
+        'cursos.*' => 'exists:cursos,id_curso',
+        'horarios' => 'required|array|min:1',
+        'horarios.*' => 'exists:horarios,id_horario',
+        'montos' => 'required|array|min:1',
+        'montos.*' => 'numeric|min:0',
+        'notas' => 'nullable|string'
+    ]);
 
-        // Crear la matrícula
-        $matricula = new Matricula();
-        $matricula->id_estudiante = $request->id_estudiante;
-        $matricula->fecha_registro = $request->fecha_registro;
-        $matricula->descuento = $request->descuento ?? 0;
-        $matricula->costo_total = $request->costo_total;
-        $matricula->notas = $request->notas;
-        $matricula->estado = 'activa';
-        $matricula->save();
+    // Crear la matrícula
+    $matricula = new Matricula();
+    $matricula->id_estudiante = $request->id_estudiante;
+    $matricula->fecha_matricula = $request->fecha_registro;  // Mapeo correcto
+    $matricula->descuento_porcentaje = $request->descuento ?? 0;  // Mapeo correcto
+    $matricula->monto_total = $request->costo_total;  // Mapeo correcto
+    $matricula->observaciones = $request->notas;  // Mapeo correcto
+    $matricula->estado = 'activa';
+    $matricula->save();
 
-        // Crear los detalles de matrícula
-        foreach ($request->cursos as $key => $curso_id) {
-            $detalle = new DetalleMatricula();
-            $detalle->id_matricula = $matricula->id_matricula;
-            $detalle->id_curso = $curso_id;
-            $detalle->id_horario = $request->horarios[$key];
-            $detalle->monto = $request->montos[$key];
-            $detalle->save();
-        }
-
-        return redirect()->route('matriculas.index')
-            ->with('success', 'Matrícula creada exitosamente');
+    // Crear los detalles de matrícula
+    foreach ($request->cursos as $key => $curso_id) {
+        $detalle = new DetalleMatricula();
+        $detalle->id_matricula = $matricula->id_matricula;
+        $detalle->id_curso = $curso_id;
+        $detalle->id_horario = $request->horarios[$key];
+        $detalle->precio_curso = $request->montos[$key];
+        $detalle->descuento_aplicado = 0; // Puedes calcular descuentos individuales si necesitas
+        $detalle->subtotal = $request->montos[$key];
+        $detalle->save();
     }
+
+    return redirect()->route('matriculas.index')
+        ->with('success', 'Matrícula creada exitosamente');
+}
 
     public function show(Matricula $matricula)
 {

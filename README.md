@@ -1,61 +1,260 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎓 Zentrix - Sistema de Gestión Académica
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Zentrix Logo](public/images/zentrix-logo.png)
 
-## About Laravel
+**Zentrix Grupo de Estudios** es un sistema integral de gestión académica desarrollado con Laravel que permite administrar de manera eficiente estudiantes, matrículas, pagos, cursos y horarios en instituciones educativas.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ Características Principales
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 📚 Gestión Académica Completa
+- **Estudiantes**: Registro completo con datos personales, académicos y familiares
+- **Apoderados**: Gestión de responsables con información de contacto
+- **Matrículas**: Control total del proceso de matriculación
+- **Cursos**: Administración de materias y niveles educativos
+- **Horarios**: Programación de clases con control de conflictos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 💰 Gestión Financiera
+- **Pagos**: Registro y seguimiento de pagos con múltiples métodos
+- **Comprobantes**: Generación automática de recibos
+- **Reportes**: Estadísticas financieras en tiempo real
+- **Control de Morosos**: Seguimiento de pagos pendientes
 
-## Learning Laravel
+### 📊 Dashboard y Reportes
+- **Panel de Control**: Vista general con métricas importantes
+- **Estadísticas en Tiempo Real**: Contadores dinámicos
+- **Reportes Visuales**: Gráficos y tablas interactivas
+- **Historial Completo**: Seguimiento de todas las actividades
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🔐 Seguridad y Usuarios
+- **Autenticación**: Sistema de login seguro
+- **Perfiles de Usuario**: Gestión de cuentas y permisos
+- **Configuración**: Panel completo de ajustes del sistema
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🚀 Tecnologías Utilizadas
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Backend**: Laravel 10.x (PHP 8.2+)
+- **Frontend**: Bootstrap 5.3, Font Awesome 6.4
+- **Base de Datos**: MySQL 8.0+
+- **Autenticación**: Laravel Breeze
+- **Almacenamiento**: Laravel Storage (local/cloud)
 
-## Laravel Sponsors
+## 📋 Requisitos del Sistema
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- PHP >= 8.2
+- Composer
+- MySQL >= 8.0
+- Node.js >= 16.x (para compilar assets)
+- Extensiones PHP: OpenSSL, PDO, Mbstring, Tokenizer, XML, Ctype, JSON
 
-### Premium Partners
+## 🛠️ Instalación
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 1. Clonar el Repositorio
+```bash
+git clone https://github.com/tu-usuario/zentrix-gestion.git
+cd zentrix-gestion
+```
 
-## Contributing
+### 2. Instalar Dependencias
+```bash
+# Dependencias PHP
+composer install
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Dependencias Node.js (si usas)
+npm install
+```
 
-## Code of Conduct
+### 3. Configuración del Entorno
+```bash
+# Copiar archivo de configuración
+cp .env.example .env
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Generar clave de aplicación
+php artisan key:generate
 
-## Security Vulnerabilities
+# Crear enlace simbólico para storage
+php artisan storage:link
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Configurar Base de Datos
+Edita el archivo `.env` con tus credenciales:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=zentrix_db
+DB_USERNAME=tu_usuario
+DB_PASSWORD=tu_contraseña
+```
 
-## License
+### 5. Ejecutar Migraciones
+```bash
+# Crear tablas
+php artisan migrate
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Ejecutar seeders (opcional)
+php artisan db:seed
+```
+
+### 6. Configurar Permisos
+```bash
+# Permisos de storage
+chmod -R 775 storage bootstrap/cache
+
+# Propietario (en producción)
+chown -R www-data:www-data storage bootstrap/cache
+```
+
+### 7. Iniciar Servidor
+```bash
+# Servidor de desarrollo
+php artisan serve
+
+# Acceder a: http://localhost:8000
+```
+
+## 📁 Estructura del Proyecto
+
+```
+zentrix-gestion/
+├── app/
+│   ├── Http/Controllers/     # Controladores principales
+│   ├── Models/              # Modelos Eloquent
+│   └── Http/Requests/       # Validaciones de formularios
+├── database/
+│   ├── migrations/          # Migraciones de BD
+│   └── seeders/            # Datos de prueba
+├── public/
+│   └── images/             # Logos y assets
+├── resources/
+│   └── views/
+│       ├── admin/          # Vistas del sistema
+│       ├── layouts/        # Plantillas base
+│       └── profile/        # Configuración de usuario
+└── routes/
+    └── web.php             # Rutas del sistema
+```
+
+## 🎯 Funcionalidades por Módulo
+
+### 👨‍🎓 Estudiantes
+- ✅ Registro completo con validaciones
+- ✅ Búsqueda y filtros avanzados
+- ✅ Historial académico
+- ✅ Relación con apoderados
+- ✅ Estados (activo, inactivo, graduado)
+
+### 👨‍👩‍👧‍👦 Apoderados
+- ✅ Datos de contacto completos
+- ✅ Relación con múltiples estudiantes
+- ✅ Historial de comunicaciones
+
+### 📝 Matrículas
+- ✅ Proceso de matriculación paso a paso
+- ✅ Asignación de cursos y horarios
+- ✅ Cálculo automático de costos
+- ✅ Estados de matrícula
+- ✅ Descuentos y promociones
+
+### 💳 Pagos
+- ✅ Múltiples métodos de pago
+- ✅ Generación de comprobantes
+- ✅ Control de pagos en exceso
+- ✅ Estados: completado, pendiente, anulado
+- ✅ Reportes financieros
+
+### 📚 Cursos
+- ✅ Gestión por niveles educativos
+- ✅ Información detallada
+- ✅ Asignación de horarios
+- ✅ Control de cupos
+
+### ⏰ Horarios
+- ✅ Programación semanal
+- ✅ Control de conflictos
+- ✅ Asignación de salones
+- ✅ Cupos máximos
+
+## 🔧 Configuración Avanzada
+
+### Variables de Entorno Importantes
+```env
+APP_NAME="Zentrix Grupo de Estudios"
+APP_URL=http://localhost:8000
+APP_TIMEZONE=America/Lima
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=tu_email@gmail.com
+MAIL_PASSWORD=tu_contraseña
+```
+
+### Configuración de Storage
+```bash
+# Para imágenes de perfil
+mkdir storage/app/public/avatars
+
+# Para comprobantes
+mkdir storage/app/public/comprobantes
+```
+
+## 📱 Uso del Sistema
+
+### Acceso Inicial
+1. Crear usuario administrador:
+```bash
+php artisan tinker
+User::create([
+    'name' => 'Administrador',
+    'email' => 'admin@zentrix.edu.pe',
+    'password' => Hash::make('admin123'),
+    'role' => 'admin'
+]);
+```
+
+2. Acceder con las credenciales creadas
+3. Configurar información de la institución en el panel
+
+### Flujo de Trabajo Recomendado
+1. **Configurar** cursos y horarios
+2. **Registrar** apoderados
+3. **Registrar** estudiantes
+4. **Crear** matrículas
+5. **Gestionar** pagos
+
+## 🚀 Despliegue en Producción
+
+### Optimizaciones
+```bash
+# Cache de configuración
+php artisan config:cache
+
+# Cache de rutas
+php artisan route:cache
+
+# Cache de vistas
+php artisan view:cache
+
+# Optimización de autoloader
+composer install --optimize-autoloader --no-dev
+```
+
+### Seguridad
+- Cambiar `APP_DEBUG=false` en producción
+- Usar HTTPS
+- Configurar backup automático
+- Implementar monitoreo de logs
+
+## 🤝 Contribuciones
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit tus cambios (`git commit -am 'Agregar nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Crear un Pull Request
+
+## 📞 Soporte
+
+- **Email**: soporte@zentrix.edu.pe
+- **Teléfono**: +51 1 234-5678
+- **Dirección**: Av. Principal 123, Lima, Perú

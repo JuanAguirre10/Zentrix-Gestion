@@ -43,20 +43,24 @@
                     <tr>
                         <td>{{ $matricula->id_matricula }}</td>
                         <td>{{ $matricula->estudiante->nombres ?? 'N/A' }} {{ $matricula->estudiante->apellidos ?? '' }}</td>
-                        <td>{{ date('d/m/Y', strtotime($matricula->fecha_registro)) }}</td>
+                        <td>{{ date('d/m/Y', strtotime($matricula->fecha_matricula)) }}</td>
                         <td>
-                            <span class="badge bg-info">{{ $matricula->detallesMatricula->count() }}</span>
+                            <span class="badge bg-info">1</span>
                         </td>
                         <td>
                             @if($matricula->estado == 'activa')
                                 <span class="badge bg-success">Activa</span>
                             @elseif($matricula->estado == 'finalizada')
                                 <span class="badge bg-secondary">Finalizada</span>
+                            @elseif($matricula->estado == 'inactiva')
+                                <span class="badge bg-warning">Inactiva</span>
+                            @elseif($matricula->estado == 'suspendida')
+                                <span class="badge bg-danger">Suspendida</span>
                             @else
-                                <span class="badge bg-danger">Cancelada</span>
+                                <span class="badge bg-light">{{ ucfirst($matricula->estado) }}</span>
                             @endif
                         </td>
-                        <td>S/ {{ number_format($matricula->costo_total, 2) }}</td>
+                        <td>S/ {{ number_format($matricula->monto_total, 2) }}</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <a href="{{ route('matriculas.show', $matricula->id_matricula) }}" class="btn btn-info btn-sm">

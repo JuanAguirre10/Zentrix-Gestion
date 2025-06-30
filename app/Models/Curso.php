@@ -11,7 +11,7 @@ class Curso extends Model
     
     protected $table = 'cursos';
     protected $primaryKey = 'id_curso';
-    protected $fillable = ['nombre', 'id_nivel', 'duracion', 'precio', 'descripcion'];
+    protected $fillable = ['nombre_curso', 'id_nivel', 'duracion', 'precio', 'descripcion'];
     
 public function nivelEducativo() {
         return $this->belongsTo(NivelEducativo::class, 'id_nivel', 'id_nivel');

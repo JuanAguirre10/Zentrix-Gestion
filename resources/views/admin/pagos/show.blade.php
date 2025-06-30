@@ -3,50 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <!-- Sidebar -->
-        <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
-            <div class="sidebar-sticky">
-                <h4 class="text-white text-center py-3">Panel de Control</h4>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('dashboard') }}">
-                            <i class="fas fa-tachometer-alt"></i> Centro de Control
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('estudiantes.index') }}">
-                            <i class="fas fa-user-graduate"></i> Estudiantes
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('apoderados.index') }}">
-                            <i class="fas fa-users"></i> Apoderados
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('cursos.index') }}">
-                            <i class="fas fa-book"></i> Cursos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('matriculas.index') }}">
-                            <i class="fas fa-clipboard-list"></i> Matrículas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white active" href="{{ route('pagos.index') }}">
-                            <i class="fas fa-money-bill"></i> Pagos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('horarios.index') }}">
-                            <i class="fas fa-clock"></i> Horarios
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
+    
         <!-- Contenido Principal -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -90,65 +47,68 @@
                                     <td>{{ \Carbon\Carbon::parse($pago->fecha_pago)->format('d/m/Y') }}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Método de Pago:</strong></td>
-                                    <td>
-                                        @switch($pago->metodo_pago)
-                                            @case('efectivo')
-                                                <span class="badge badge-success">
-                                                    <i class="fas fa-money-bill"></i> Efectivo
-                                                </span>
-                                                @break
-                                            @case('tarjeta')
-                                                <span class="badge badge-info">
-                                                    <i class="fas fa-credit-card"></i> Tarjeta
-                                                </span>
-                                                @break
-                                            @case('transferencia')
-                                                <span class="badge badge-warning">
-                                                    <i class="fas fa-university"></i> Transferencia
-                                                </span>
-                                                @break
-                                            @default
-                                                <span class="badge badge-secondary">
-                                                    {{ ucfirst($pago->metodo_pago) }}
-                                                </span>
-                                        @endswitch
-                                    </td>
-                                </tr>
+    <td><strong>Método de Pago:</strong></td>
+    <td>
+        @switch($pago->metodo_pago)
+            @case('efectivo')
+                <span class="badge bg-success">
+                    <i class="fas fa-money-bill"></i> Efectivo
+                </span>
+                @break
+            @case('tarjeta')
+                <span class="badge bg-info">
+                    <i class="fas fa-credit-card"></i> Tarjeta
+                </span>
+                @break
+            @case('transferencia')
+                <span class="badge bg-warning">
+                    <i class="fas fa-university"></i> Transferencia
+                </span>
+                @break
+            @default
+                <span class="badge bg-secondary">
+                    {{ ucfirst($pago->metodo_pago) }}
+                </span>
+        @endswitch
+    </td>
+</tr>
+                                    
+                                    
+                                
+                               <tr>
+    <td><strong>Comprobante:</strong></td>
+    <td>
+        @if($pago->comprobante)
+            <span class="badge bg-info">{{ $pago->comprobante }}</span>
+        @else
+            <span class="text-muted">Sin comprobante</span>
+        @endif
+    </td>
+</tr>
                                 <tr>
-                                    <td><strong>Comprobante:</strong></td>
-                                    <td>
-                                        @if($pago->comprobante)
-                                            <span class="badge badge-info">{{ $pago->comprobante }}</span>
-                                        @else
-                                            <span class="text-muted">Sin comprobante</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Estado:</strong></td>
-                                    <td>
-                                        @switch($pago->estado)
-                                            @case('completado')
-                                                <span class="badge badge-success">
-                                                    <i class="fas fa-check-circle"></i> Completado
-                                                </span>
-                                                @break
-                                            @case('pendiente')
-                                                <span class="badge badge-warning">
-                                                    <i class="fas fa-clock"></i> Pendiente
-                                                </span>
-                                                @break
-                                            @case('anulado')
-                                                <span class="badge badge-danger">
-                                                    <i class="fas fa-times-circle"></i> Anulado
-                                                </span>
-                                                @break
-                                            @default
-                                                <span class="badge badge-light">{{ ucfirst($pago->estado) }}</span>
-                                        @endswitch
-                                    </td>
-                                </tr>
+    <td><strong>Estado:</strong></td>
+    <td>
+        @switch($pago->estado)
+            @case('completado')
+                <span class="badge bg-success">
+                    <i class="fas fa-check-circle"></i> Completado
+                </span>
+                @break
+            @case('pendiente')
+                <span class="badge bg-warning">
+                    <i class="fas fa-clock"></i> Pendiente
+                </span>
+                @break
+            @case('anulado')
+                <span class="badge bg-danger">
+                    <i class="fas fa-times-circle"></i> Anulado
+                </span>
+                @break
+            @default
+                <span class="badge bg-light text-dark">{{ ucfirst($pago->estado) }}</span>
+        @endswitch
+    </td>
+</tr>
                                 <tr>
                                     <td><strong>Fecha de Registro:</strong></td>
                                     <td>{{ $pago->created_at->format('d/m/Y H:i') }}</td>
@@ -224,11 +184,11 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Mes:</strong></td>
-                                    <td>{{ $fechaPago->formatLocalized('%B %Y') }}</td>
+                                    <td>{{ $fechaPago->translatedFormat('F Y') }}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Día de la semana:</strong></td>
-                                    <td>{{ $fechaPago->formatLocalized('%A') }}</td>
+                                    <td>{{ $fechaPago->translatedFormat('l') }}</td>
                                 </tr>
                             </table>
                         </div>

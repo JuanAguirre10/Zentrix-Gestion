@@ -24,7 +24,7 @@ class CursoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255',
+            'nombre_curso' => 'required|string|max:255',
             'id_nivel' => 'required|exists:niveles_edu,id_nivel',
             'duracion' => 'nullable|string|max:50',
             'precio' => 'required|numeric|min:0',
@@ -37,10 +37,10 @@ class CursoController extends Controller
     }
 
     public function show(Curso $curso)
-    {
-        $curso->load(['nivelEducativo', 'temas']);
-        return view('admin.cursos.show', compact('curso'));
-    }
+{
+    $curso->load(['nivelEducativo']);
+    return view('admin.cursos.show', compact('curso'));
+}
 
     public function edit(Curso $curso)
     {

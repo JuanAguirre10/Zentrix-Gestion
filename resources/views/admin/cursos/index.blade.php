@@ -39,10 +39,10 @@
                 </thead>
                 <tbody>
                     @forelse($cursos as $curso)
-                    <tr>
+                    <tr> 
                         <td>{{ $curso->id_curso }}</td>
-                        <td>{{ $curso->nombre }}</td>
-                        <td>{{ $curso->nivelEducativo->nombre ?? 'N/A' }}</td>
+                        <td>{{ $curso->nombre_curso ?? 'N/A' }}</td>
+                        <td>{{ $curso->nivelEducativo->nombre_nivel ?? 'N/A' }}</td>
                         <td>{{ $curso->duracion ?? 'No especificado' }}</td>
                         <td>S/ {{ number_format($curso->precio, 2) }}</td>
                         <td>
@@ -53,9 +53,8 @@
                                 <a href="{{ route('cursos.edit', $curso->id_curso) }}" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                {{-- <a href="{{ route('cursos.temas', $curso->id_curso) }}" class="btn btn-success btn-sm"> --}}
-<a href="#" class="btn btn-success btn-sm disabled" title="Función en desarrollo">
-                                    <i class="fas fa-list"></i>
+                                
+                                    
                                 </a>
                                 <form action="{{ route('cursos.destroy', $curso->id_curso) }}" method="POST" style="display: inline-block;">
                                     @csrf
