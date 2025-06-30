@@ -11,7 +11,7 @@ class Pago extends Model
     
     protected $table = 'pagos';
     protected $primaryKey = 'id_pago';
-    protected $fillable = ['id_matricula', 'monto', 'fecha_pago', 'id_metodo_pago', 'comprobante', 'estado'];
+    protected $fillable = ['id_matricula', 'monto', 'fecha_pago', 'metodo_pago', 'comprobante', 'estado', 'observaciones'];
     
     public function matricula() {
         return $this->belongsTo(Matricula::class, 'id_matricula', 'id_matricula');

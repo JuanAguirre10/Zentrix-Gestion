@@ -25,7 +25,7 @@
             <div class="row mb-3">
                 <div class="col-md-8">
                     <label for="nombre" class="form-label">Nombre del Curso</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" required>
+                    <input type="text" class="form-control" id="nombre_curso" name="nombre_curso" value="{{ old('nombre_curso') }}" required>
                 </div>
                 <div class="col-md-4">
                     <label for="id_nivel" class="form-label">Nivel Educativo</label>
@@ -33,7 +33,7 @@
                         <option value="">Seleccionar...</option>
                         @foreach($niveles as $nivel)
                             <option value="{{ $nivel->id_nivel }}" {{ old('id_nivel') == $nivel->id_nivel ? 'selected' : '' }}>
-                                {{ $nivel->nombre }}
+                                {{ $nivel->nombre_nivel }}
                             </option>
                         @endforeach
                     </select>

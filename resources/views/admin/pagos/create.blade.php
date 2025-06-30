@@ -28,10 +28,18 @@
                     <select class="form-select" id="id_matricula" name="id_matricula" required>
                         <option value="">Seleccionar matrícula...</option>
                         @foreach($matriculas as $matricula)
-                            <option value="{{ $matricula->id_matricula }}" data-saldo="{{ $matricula->saldo_pendiente }}" {{ old('id_matricula') == $matricula->id_matricula ? 'selected' : '' }}>
-                                {{ $matricula->estudiante->nombres ?? 'N/A' }} {{ $matricula->estudiante->apellidos ?? '' }} - Matrícula #{{ $matricula->id_matricula }}
-                            </option>
-                        @endforeach
+    @php
+        $totalPagado = $matricula->pagos->sum('monto');
+        $saldoPendiente = $matricula->monto_total - $totalPagado;
+    @endphp
+    <option value="{{ $matricula->id_matricula }}" 
+            data-saldo="{{ $saldoPendiente }}" 
+            data-total="{{ $matricula->monto_total }}"
+            data-pagado="{{ $totalPagado }}"
+            {{ old('id_matricula') == $matricula->id_matricula ? 'selected' : '' }}>
+        {{ $matricula->estudiante->nombres ?? 'N/A' }} {{ $matricula->estudiante->apellidos ?? '' }} - Matrícula #{{ $matricula->id_matricula }}
+    </option>
+@endforeach
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -39,16 +47,15 @@
                     <input type="date" class="form-control" id="fecha_pago" name="fecha_pago" value="{{ old('fecha_pago', date('Y-m-d')) }}" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="id_metodo_pago" class="form-label">Método de Pago</label>
-                    <select class="form-select" id="id_metodo_pago" name="id_metodo_pago" required>
-                        <option value="">Seleccionar...</option>
-                        @foreach($metodos_pago as $metodo)
-                            <option value="{{ $metodo->id_metodo_pago }}" {{ old('id_metodo_pago') == $metodo->id_metodo_pago ? 'selected' : '' }}>
-                                {{ $metodo->nombre }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+    <label for="metodo_pago" class="form-label">Método de Pago</label>
+    <select class="form-select" id="metodo_pago" name="metodo_pago" required>
+        <option value="">Seleccionar...</option>
+        <option value="efectivo" {{ old('metodo_pago') == 'efectivo' ? 'selected' : '' }}>Efectivo</option>
+        <option value="tarjeta" {{ old('metodo_pago') == 'tarjeta' ? 'selected' : '' }}>Tarjeta</option>
+        <option value="transferencia" {{ old('metodo_pago') == 'transferencia' ? 'selected' : '' }}>Transferencia</option>
+        <option value="deposito" {{ old('metodo_pago') == 'deposito' ? 'selected' : '' }}>Depósito</option>
+    </select>
+</div>
             </div>
 
             <div class="row mb-3">
@@ -82,6 +89,10 @@
                     </div>
                 </div>
             </div>
+            <div class="mb-3">
+    <label for="observaciones" class="form-label">Observaciones</label>
+    <textarea class="form-control" id="observaciones" name="observaciones" rows="3">{{ old('observaciones') }}</textarea>
+</div>
 
             <div class="d-flex justify-content-between">
                 <a href="{{ route('pagos.index') }}" class="btn btn-secondary">

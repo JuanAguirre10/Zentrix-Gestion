@@ -39,7 +39,7 @@
                         <td>{{ $estudiante->nombres }}</td>
                         <td>{{ $estudiante->apellidos }}</td>
                         <td>{{ $estudiante->dni ?? 'N/A' }}</td>
-                        <td>{{ $estudiante->gradoEscolar->nombre ?? 'N/A' }}</td>
+                        <td>{{ $estudiante->gradoEscolar->nombre_grado ?? 'N/A' }}</td>
                         <td>{{ $estudiante->apoderado->nombres ?? 'N/A' }} {{ $estudiante->apoderado->apellidos ?? '' }}</td>
                         <td>
                             <div class="btn-group" role="group">

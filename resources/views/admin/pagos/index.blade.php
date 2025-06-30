@@ -45,7 +45,24 @@
                         <td>{{ $pago->matricula->estudiante->nombres ?? 'N/A' }} {{ $pago->matricula->estudiante->apellidos ?? '' }}</td>
                         <td>{{ date('d/m/Y', strtotime($pago->fecha_pago)) }}</td>
                         <td>S/ {{ number_format($pago->monto, 2) }}</td>
-                        <td>{{ $pago->metodoPago->nombre ?? 'N/A' }}</td>
+                        <td>
+    @switch($pago->metodo_pago)
+        @case('efectivo')
+            <span class="badge bg-success">Efectivo</span>
+            @break
+        @case('tarjeta')
+            <span class="badge bg-info">Tarjeta</span>
+            @break
+        @case('transferencia')
+            <span class="badge bg-warning">Transferencia</span>
+            @break
+        @case('deposito')
+            <span class="badge bg-primary">Depósito</span>
+            @break
+        @default
+            <span class="badge bg-secondary">{{ ucfirst($pago->metodo_pago) }}</span>
+    @endswitch
+</td>
                         <td>
                             @if($pago->estado == 'completado')
                                 <span class="badge bg-success">Completado</span>

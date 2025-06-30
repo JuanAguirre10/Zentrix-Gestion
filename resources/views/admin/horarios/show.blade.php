@@ -3,49 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <!-- Sidebar -->
-        <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
-            <div class="sidebar-sticky">
-                <h4 class="text-white text-center py-3">Panel de Control</h4>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('dashboard') }}">
-                            <i class="fas fa-tachometer-alt"></i> Centro de Control
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('estudiantes.index') }}">
-                            <i class="fas fa-user-graduate"></i> Estudiantes
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('apoderados.index') }}">
-                            <i class="fas fa-users"></i> Apoderados
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('cursos.index') }}">
-                            <i class="fas fa-book"></i> Cursos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('matriculas.index') }}">
-                            <i class="fas fa-clipboard-list"></i> Matrículas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('pagos.index') }}">
-                            <i class="fas fa-money-bill"></i> Pagos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white active" href="{{ route('horarios.index') }}">
-                            <i class="fas fa-clock"></i> Horarios
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+    
 
         <!-- Contenido Principal -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">

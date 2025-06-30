@@ -57,6 +57,25 @@ class Estudiante extends Model
     {
         return $this->hasMany(Evaluacion::class, 'id_estudiante', 'id_estudiante');
     }
+    // LÍNEA 60 - Agregar aquí:
+
+// Cursos activos del estudiante
+public function cursosActivos()
+{
+    return $this->belongsToMany(Curso::class, 'estudiante_curso', 'estudiante_id', 'curso_id')
+        ->wherePivot('estado', 'activo')
+        ->withPivot('fecha_inscripcion', 'estado', 'nota_final', 'observaciones')
+        ->withTimestamps();
+}
+
+// Cursos aprobados con buenas notas
+public function cursosAprobados()
+{
+    return $this->belongsToMany(Curso::class, 'estudiante_curso', 'estudiante_id', 'curso_id')
+        ->wherePivot('estado', 'completado')
+        ->wherePivot('nota_final', '>=', 11) // Nota mínima aprobatoria
+        ->withPivot('fecha_inscripcion', 'estado', 'nota_final', 'observaciones');
+}
 
     // Relación muchos a muchos con Curso
     public function cursos()
