@@ -16,16 +16,16 @@ class CursoController extends Controller
     }
 
     public function create()
-    {
-        $niveles = NivelEducativo::all();
-        return view('admin.cursos.create', compact('niveles'));
-    }
+{
+    $niveles = NivelEducativo::distinct('nombre_nivel')->orderBy('nombre_nivel')->get();
+    return view('admin.cursos.create', compact('niveles'));
+}
 
     public function store(Request $request)
     {
         $request->validate([
             'nombre_curso' => 'required|string|max:255',
-            'id_nivel' => 'required|exists:niveles_edu,id_nivel',
+            'id_nivel' => 'required|exists:niveles_educativos,id_nivel',
             'duracion' => 'nullable|string|max:50',
             'precio' => 'required|numeric|min:0',
             'descripcion' => 'nullable|string'
@@ -43,10 +43,10 @@ class CursoController extends Controller
 }
 
     public function edit(Curso $curso)
-    {
-        $niveles = NivelEducativo::all();
-        return view('admin.cursos.edit', compact('curso', 'niveles'));
-    }
+{
+    $niveles = NivelEducativo::distinct('nombre_nivel')->orderBy('nombre_nivel')->get();
+    return view('admin.cursos.edit', compact('curso', 'niveles'));
+}
 
     public function update(Request $request, Curso $curso)
     {

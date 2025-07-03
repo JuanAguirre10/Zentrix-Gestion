@@ -11,7 +11,7 @@ class GradoEscolar extends Model
     
     protected $table = 'grados_escolar';
     protected $primaryKey = 'id_grado';
-    protected $fillable = ['nombre', 'id_nivel', 'jerarquia'];
+    protected $fillable = ['nombre_grado', 'id_nivel', 'jerarquia'];
     
     public function nivelEducativo() {
         return $this->belongsTo(NivelEducativo::class, 'id_nivel', 'id_nivel');

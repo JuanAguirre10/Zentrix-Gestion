@@ -37,7 +37,12 @@ class Estudiante extends Model
     // Relación con Apoderado
     public function apoderado()
     {
-        return $this->belongsTo(Apoderado::class, 'id_apoderado', 'id_apoderado');
+        return $this->belongsTo(Apoderado::class, 'id_apoderado', 'id_apoderado')
+                ->withDefault([
+                    'nombres' => 'Sin',
+                    'apellidos' => 'Apoderado',
+                    'id_apoderado' => null
+                ]);
     }
 
     // Relación con GradoEscolar

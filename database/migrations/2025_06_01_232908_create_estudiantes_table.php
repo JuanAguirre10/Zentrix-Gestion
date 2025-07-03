@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('apellidos', 100);
             $table->string('dni', 20)->nullable();
             $table->date('fecha_nacimiento')->nullable();
-            $table->unsignedBigInteger('id_apoderado');
+            $table->unsignedBigInteger('id_apoderado')->nullable()->change();
             $table->unsignedBigInteger('id_grado');
             $table->string('centro_estudios', 255)->nullable();
             $table->text('observaciones')->nullable();

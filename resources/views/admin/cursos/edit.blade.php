@@ -29,16 +29,16 @@
                     <input type="text" class="form-control" id="nombre_curso" name="nombre_curso" value="{{ old('nombre_curso', $curso->nombre_curso) }}" required>
                 </div>
                 <div class="col-md-4">
-                    <label for="id_nivel" class="form-label">Nivel Educativo</label>
-                    <select class="form-select" id="id_nivel" name="id_nivel" required>
-                        <option value="">Seleccionar...</option>
-                        @foreach($niveles as $nivel)
-                            <option value="{{ $nivel->id_nivel }}" {{ old('id_nivel', $curso->id_nivel) == $nivel->id_nivel ? 'selected' : '' }}>
-                                {{ $nivel->nombre }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+    <label for="id_nivel" class="form-label">Nivel Educativo</label>
+    <select class="form-select" id="id_nivel" name="id_nivel" required>
+        <option value="">Seleccionar...</option>
+        @foreach($niveles as $nivel)
+            <option value="{{ $nivel->id_nivel }}" {{ old('id_nivel', $curso->id_nivel) == $nivel->id_nivel ? 'selected' : '' }}>
+                {{ $nivel->nombre_nivel }}
+            </option>
+        @endforeach
+    </select>
+</div>
             </div>
 
             <div class="row mb-3">

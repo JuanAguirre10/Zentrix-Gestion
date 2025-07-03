@@ -138,21 +138,33 @@
                             </p>
                             
                             @if($pago->estado === 'completado')
-                                <div class="alert alert-success">
-                                    <i class="fas fa-check-circle"></i>
-                                    Pago procesado exitosamente
-                                </div>
-                            @elseif($pago->estado === 'pendiente')
-                                <div class="alert alert-warning">
-                                    <i class="fas fa-clock"></i>
-                                    Pago en proceso de verificación
-                                </div>
-                            @else
-                                <div class="alert alert-danger">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    Pago anulado
-                                </div>
-                            @endif
+    <div class="alert alert-success">
+        <i class="fas fa-check-circle"></i>
+        Pago procesado exitosamente
+    </div>
+    
+    @php
+        $totalPagado = $pago->matricula->pagos->where('estado', 'completado')->sum('monto');
+        $saldoPendiente = $pago->matricula->monto_total - $totalPagado;
+    @endphp
+    
+    @if($saldoPendiente > 0)
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Atención:</strong> Este pago está completado, pero la matrícula aún tiene un saldo pendiente de S/ {{ number_format($saldoPendiente, 2) }}
+        </div>
+    @endif
+@elseif($pago->estado === 'pendiente')
+    <div class="alert alert-warning">
+        <i class="fas fa-clock"></i>
+        Pago en proceso de verificación
+    </div>
+@else
+    <div class="alert alert-danger">
+        <i class="fas fa-exclamation-triangle"></i>
+        Pago anulado
+    </div>
+@endif
 
                             @if($pago->comprobante)
                                 <small class="text-muted">
@@ -344,56 +356,55 @@
             @endif
 
             <!-- Botones de Acción -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            @if($pago->estado === 'pendiente')
-                                <button class="btn btn-success" onclick="confirmarPago()">
-                                    <i class="fas fa-check"></i> Confirmar Pago
-                                </button>
-                            @endif
-                            
-                            <a href="{{ route('pagos.edit', $pago) }}" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> Editar Pago
-                            </a>
-                            
-                            <button class="btn btn-info" onclick="imprimirComprobante()">
-                                <i class="fas fa-print"></i> Imprimir Comprobante
-                            </button>
-                            
-                            <a href="{{ route('pagos.create') }}?matricula={{ $pago->matricula->id_matricula ?? $pago->matricula->id }}" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Nuevo Pago (Misma Matrícula)
-                            </a>
-                            
-                            <a href="{{ route('pagos.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-list"></i> Volver al Listado
-                            </a>
-                            
-                            @if($pago->estado !== 'anulado')
-                                <form action="{{ route('pagos.destroy', $pago) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de anular este pago?')">
-                                        <i class="fas fa-ban"></i> Anular Pago
-                                    </button>
-                                </form>
-                            @endif
-                        </div>
-                    </div>
-                </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body text-center">
+                @if($pago->estado === 'pendiente')
+                    <form action="{{ route('pagos.confirmar', $pago->id_pago) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn btn-success" onclick="return confirm('¿Confirmar este pago como completado?')">
+                            <i class="fas fa-check"></i> Confirmar Pago
+                        </button>
+                    </form>
+                @endif
+                
+                <a href="{{ route('pagos.edit', $pago) }}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Editar Pago
+                </a>
+                
+                <button class="btn btn-info" onclick="imprimirComprobante()">
+                    <i class="fas fa-print"></i> Imprimir Comprobante
+                </button>
+                
+                <a href="{{ route('pagos.create') }}?matricula={{ $pago->matricula->id_matricula ?? $pago->matricula->id }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Nuevo Pago (Misma Matrícula)
+                </a>
+                
+                <a href="{{ route('pagos.index') }}" class="btn btn-secondary">
+                    <i class="fas fa-list"></i> Volver al Listado
+                </a>
+                
+                @if($pago->estado !== 'anulado')
+                    <form action="{{ route('pagos.destroy', $pago) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de anular este pago?')">
+                            <i class="fas fa-ban"></i> Anular Pago
+                        </button>
+                    </form>
+                @endif
             </div>
+        </div>
+    </div>
+</div>
         </main>
     </div>
 </div>
 
 <script>
-function confirmarPago() {
-    if(confirm('¿Confirmar este pago como completado?')) {
-        // Aquí implementarías la lógica para cambiar el estado
-        alert('Funcionalidad de confirmación pendiente de implementación');
-    }
-}
+
 
 function imprimirComprobante() {
     window.print();

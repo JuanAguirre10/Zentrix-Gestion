@@ -53,27 +53,33 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="id_apoderado" class="form-label">Apoderado</label>
-                    <select class="form-control" id="id_apoderado" name="id_apoderado" required>
-                        <option value="">Seleccionar apoderado</option>
-                        @if(isset($apoderados))
-                            @foreach($apoderados as $apoderado)
+                    <select class="form-control" id="id_apoderado" name="id_apoderado">
+                        @if(isset($apoderadosCompletos))
+                            @foreach($apoderadosCompletos as $apoderado)
                                 <option value="{{ $apoderado->id_apoderado }}" 
                                     {{ old('id_apoderado', $estudiante->id_apoderado) == $apoderado->id_apoderado ? 'selected' : '' }}>
-                                    {{ $apoderado->nombres }} {{ $apoderado->apellidos }}
+                                    @if($apoderado->id_apoderado == 1)
+                                        Sin Apoderado (Asignar después)
+                                    @else
+                                        {{ $apoderado->nombres }} {{ $apoderado->apellidos }}
+                                    @endif
                                 </option>
                             @endforeach
                         @endif
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label for="id_grado" class="form-label">Grado Escolar</label>
+                    <label for="id_grado" class="form-label">Grado</label>
                     <select class="form-control" id="id_grado" name="id_grado" required>
-                        <option value="">Seleccionar grado</option>
+                        <option value="">Seleccionar grado...</option>
                         @if(isset($grados))
                             @foreach($grados as $grado)
                                 <option value="{{ $grado->id_grado }}" 
                                     {{ old('id_grado', $estudiante->id_grado) == $grado->id_grado ? 'selected' : '' }}>
                                     {{ $grado->nombre_grado }}
+                                    @if($grado->descripcion)
+                                        - {{ $grado->descripcion }}
+                                    @endif
                                 </option>
                             @endforeach
                         @endif

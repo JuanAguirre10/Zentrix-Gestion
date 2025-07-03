@@ -20,7 +20,7 @@ class PagoController extends Controller
     public function create()
 {
     $matriculas = Matricula::with('estudiante')->get();
-    return view('admin.pagos.create', compact('matriculas'));
+    return view('admin.pagos.create', data: compact('matriculas'));
 }
 
    public function store(Request $request)
@@ -75,6 +75,20 @@ class PagoController extends Controller
         return redirect()->route('pagos.index')
             ->with('success', 'Pago eliminado exitosamente');
     }
+    public function confirmar(Request $request, $id)
+{
+    $pago = Pago::findOrFail($id);
     
+    // Verificar que el pago esté pendiente
+    if ($pago->estado !== 'pendiente') {
+        return redirect()->back()->with('error', 'Solo se pueden confirmar pagos pendientes');
+    }
+    
+    // Actualizar el estado del pago
+    $pago->estado = 'completado';
+    $pago->save();
+    
+    return redirect()->back()->with('success', 'Pago confirmado exitosamente');
+}
     
 }

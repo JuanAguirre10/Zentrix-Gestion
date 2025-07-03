@@ -42,4 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//Rutas de pagos
+Route::patch('/pagos/{id}/confirmar', [PagoController::class, 'confirmar'])->name('pagos.confirmar');
+
 require __DIR__.'/auth.php';

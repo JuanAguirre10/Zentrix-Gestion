@@ -29,7 +29,7 @@
                         <option value="">Seleccionar...</option>
                         @foreach($estudiantes as $estudiante)
                             <option value="{{ $estudiante->id_estudiante }}" {{ old('id_estudiante') == $estudiante->id_estudiante ? 'selected' : '' }}>
-                                {{ $estudiante->nombres }} {{ $estudiante->apellidos }} - {{ $estudiante->gradoEscolar->nombre ?? 'Sin grado' }}
+                                {{ $estudiante->nombres }} {{ $estudiante->apellidos }} - {{ $estudiante->gradoEscolar->nombre_grado ?? 'Sin grado' }}
                             </option>
                         @endforeach
                     </select>
@@ -63,7 +63,7 @@
                                         <option value="">Seleccionar...</option>
                                         @foreach($cursos as $curso)
                                             <option value="{{ $curso->id_curso }}" data-precio="{{ $curso->precio }}">
-                                                {{ $curso->nombre }} - {{ $curso->nivelEducativo->nombre ?? 'N/A' }}
+                                                {{ $curso->nombre_curso }} - {{ $curso->nivelEducativo->nombre_nivel ?? 'N/A' }}
                                             </option>
                                         @endforeach
                                     </select>

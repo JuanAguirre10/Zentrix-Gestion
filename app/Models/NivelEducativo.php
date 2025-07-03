@@ -11,7 +11,7 @@ class NivelEducativo extends Model
     
     protected $table = 'niveles_educativos';
     protected $primaryKey = 'id_nivel';
-    protected $fillable = ['nombre', 'descripcion'];
+    protected $fillable = ['nombre_nivel', 'descripcion','activo'];
     
     public function grados() {
         return $this->hasMany(GradoEscolar::class, 'id_nivel', 'id_nivel');

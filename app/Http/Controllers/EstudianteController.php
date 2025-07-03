@@ -29,28 +29,48 @@ class EstudianteController extends Controller
     }
 
     public function create()
-    {
-        $apoderados = Apoderado::all();
-        $grados = GradoEscolar::with('nivelEducativo')->get();
-        return view('admin.estudiantes.create', compact('apoderados', 'grados'));
-    }
+{
+    // Obtener todos los apoderados excepto "Sin Apoderado"
+    $apoderados = Apoderado::where('id_apoderado', '!=', 1)
+                          ->orderBy('nombres', 'asc')
+                          ->get();
+    
+    // Obtener el apoderado "Sin Apoderado" para ponerlo primero
+    $sinApoderado = Apoderado::find(1);
+    
+    // Crear la colección final con "Sin Apoderado" primero
+    $apoderadosCompletos = collect([$sinApoderado])->concat($apoderados);
+    
+    // Obtener grados con la columna correcta
+    $grados = GradoEscolar::select('id_grado', 'nombre_grado', 'descripcion', 'id_nivel')
+                          ->where('activo', 1)
+                          ->orderBy('nombre_grado', 'asc')
+                          ->get();
+    
+    return view('admin.estudiantes.create', compact('apoderadosCompletos', 'grados'));
+}
 
     public function store(Request $request)
     {
         $request->validate([
-            'nombres' => 'required|string|max:100',
-            'apellidos' => 'required|string|max:100',
-            'dni' => 'nullable|string|max:20',
-            'fecha_nacimiento' => 'nullable|date',
-            'id_apoderado' => 'required|exists:apoderados,id_apoderado',
-            'id_grado' => 'required|exists:grados_escolar,id_grado',
-            'centro_estudios' => 'nullable|string|max:255',
-            'observaciones' => 'nullable|string'
-        ]);
+        'nombres' => 'required|string|max:100',
+        'apellidos' => 'required|string|max:100',
+        'dni' => 'nullable|string|max:20',
+        'fecha_nacimiento' => 'nullable|date',
+        'id_apoderado' => 'nullable|exists:apoderados,id_apoderado',
+        'id_grado' => 'required|exists:grados_escolar,id_grado',
+        'centro_estudios' => 'nullable|string|max:255',
+        'observaciones' => 'nullable|string'
+    ]);
 
-        Estudiante::create($request->all());
-        return redirect()->route('estudiantes.index')
-            ->with('success', 'Estudiante creado exitosamente');
+    // Si no se selecciona apoderado o se selecciona "Sin Apoderado", asignar ID 1
+    if (!$request->id_apoderado || $request->id_apoderado == 1) {
+        $request->merge(['id_apoderado' => 1]);
+    }
+
+    Estudiante::create($request->all());
+    return redirect()->route('estudiantes.index')
+        ->with('success', 'Estudiante creado exitosamente');
     }
 
     public function show(Estudiante $estudiante)
@@ -60,28 +80,48 @@ class EstudianteController extends Controller
     }
 
     public function edit(Estudiante $estudiante)
-    {
-        $apoderados = Apoderado::all();
-        $grados = GradoEscolar::with('nivelEducativo')->get();
-        return view('admin.estudiantes.edit', compact('estudiante', 'apoderados', 'grados'));
-    }
+{
+    // Obtener todos los apoderados excepto "Sin Apoderado"
+    $apoderados = Apoderado::where('id_apoderado', '!=', 1)
+                          ->orderBy('nombres', 'asc')
+                          ->get();
+    
+    // Obtener el apoderado "Sin Apoderado" para ponerlo primero
+    $sinApoderado = Apoderado::find(1);
+    
+    // Crear la colección final con "Sin Apoderado" primero
+    $apoderadosCompletos = collect([$sinApoderado])->concat($apoderados);
+    
+    // Obtener grados con la columna correcta
+    $grados = GradoEscolar::select('id_grado', 'nombre_grado', 'descripcion', 'id_nivel')
+                          ->where('activo', 1)
+                          ->orderBy('nombre_grado', 'asc')
+                          ->get();
+    
+    return view('admin.estudiantes.edit', compact('estudiante', 'apoderadosCompletos', 'grados'));
+}
 
     public function update(Request $request, Estudiante $estudiante)
     {
         $request->validate([
-            'nombres' => 'required|string|max:100',
-            'apellidos' => 'required|string|max:100',
-            'dni' => 'nullable|string|max:20',
-            'fecha_nacimiento' => 'nullable|date',
-            'id_apoderado' => 'required|exists:apoderados,id_apoderado',
-            'id_grado' => 'required|exists:grados_escolar,id_grado',
-            'centro_estudios' => 'nullable|string|max:255',
-            'observaciones' => 'nullable|string'
-        ]);
+        'nombres' => 'required|string|max:100',
+        'apellidos' => 'required|string|max:100',
+        'dni' => 'nullable|string|max:20',
+        'fecha_nacimiento' => 'nullable|date',
+        'id_apoderado' => 'nullable|exists:apoderados,id_apoderado',
+        'id_grado' => 'required|exists:grados_escolar,id_grado',
+        'centro_estudios' => 'nullable|string|max:255',
+        'observaciones' => 'nullable|string'
+    ]);
 
-        $estudiante->update($request->all());
-        return redirect()->route('estudiantes.index')
-            ->with('success', 'Estudiante actualizado exitosamente');
+    // Si no se selecciona apoderado o se selecciona "Sin Apoderado", asignar ID 1
+    if (!$request->id_apoderado || $request->id_apoderado == 1) {
+        $request->merge(['id_apoderado' => 1]);
+    }
+
+    $estudiante->update($request->all());
+    return redirect()->route('estudiantes.index')
+        ->with('success', 'Estudiante actualizado exitosamente');
     }
 
     public function destroy(Estudiante $estudiante)
